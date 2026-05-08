@@ -9,6 +9,9 @@ AppDataRoamingPythonPython311Scripts
 .tmp
 tmp
 .DS_Store
+.env
+.env.*
+!.env.example
 npm-debug.log*
 yarn.lock
 deploy-node.bat

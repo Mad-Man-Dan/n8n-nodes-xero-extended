@@ -1,6 +1,6 @@
-# n8n-nodes-xero-extended
+# @paywatchglobal/n8n-nodes-xero-extended
 
-[![npm version](https://badge.fury.io/js/n8n-nodes-xero-extended.svg?icon=si%3Anpm)](https://badge.fury.io/js/n8n-nodes-xero-extended)
+[![npm version](https://badge.fury.io/js/@paywatchglobal%2Fn8n-nodes-xero-extended.svg?icon=si%3Anpm)](https://badge.fury.io/js/@paywatchglobal%2Fn8n-nodes-xero-extended)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 An enhanced Xero integration for n8n that extends the standard Xero node with additional resources and improved functionality.
@@ -18,7 +18,6 @@ Xero Extended is an enhanced Xero integration that extends the standard Xero nod
 - [Resources](#resources)
 - [Setup after installation](#setup-after-installation)
 - [License](#license)
-- [Support](#support)
 - [Acknowledgments](#acknowledgments)  
 
 ## Installation
@@ -176,7 +175,7 @@ This node is currently only available via installation on self-hosted instances.
 To install a custom node in n8n, follow these steps:
 
 - Refer to the official documentation: n8n Custom Node Installation (https://docs.n8n.io/integrations/community-nodes/installation/)
-- Choose the custom node you want to install, on the install community nodes box you'll enter the npm package name for the node. For example, n8n-nodes-xero-extended
+- Choose the custom node you want to install, on the install community nodes box you'll enter the npm package name for the node. For example, @paywatchglobal/n8n-nodes-xero-extended
 - Once installed you will now need to setup the credentials for the node. See below for more info.
 
 
@@ -198,10 +197,6 @@ Now the following are requested in addition: 	'accounting.attachments',	'account
 ## License
 
 [MIT](LICENSE)
-
-## Support
-
-For support, please open an issue on the [GitHub repository](https://github.com/Mad-Man-Dan/n8n-nodes-xero-extended).
 
 ## Acknowledgments
 

@@ -1,5 +1,5 @@
 {
-  "name": "n8n-nodes-xero-extended",
+  "name": "@paywatchglobal/n8n-nodes-xero-extended",
   "version": "1.0.6",
   "description": "Xero node for n8n with additional features beyond the standard Xero node",
   "keywords": [
@@ -19,14 +19,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Mad-Man-Dan/n8n-nodes-xero-extended.git"
+    "url": "https://github.com/paywatchglobal/n8n-nodes-xero-extended.git"
   },
   "engines": {
     "node": ">=20.15"
   },
   "main": "index.js",
   "scripts": {
-    "build": "npx rimraf dist && tsc && gulp build:icons",
+    "build": "rm -rf dist && tsc && gulp build:icons",
     "dev": "tsc --watch",
     "format": "prettier nodes credentials --write",
     "lint": "eslint nodes credentials package.json",
