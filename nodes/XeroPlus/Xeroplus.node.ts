@@ -7,7 +7,7 @@ import {
 	type INodeType,
 	type INodeTypeDescription,
 	type JsonObject,
-	NodeConnectionType,
+	NodeConnectionTypes,
 	NodeOperationError,
 	type IRequestOptions,
 } from 'n8n-workflow';
@@ -41,8 +41,8 @@ export class Xeroplus implements INodeType {
 			name: 'Xero +',
 		},
 		usableAsTool: true,
-		inputs: [NodeConnectionType.Main],
-		outputs: [NodeConnectionType.Main],
+		inputs: [NodeConnectionTypes.Main],
+		outputs: [NodeConnectionTypes.Main],
 		credentials: [
 			{
 				name: 'xeroplusOAuth2Api',
