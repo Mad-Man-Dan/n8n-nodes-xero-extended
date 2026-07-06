@@ -1,16 +1,49 @@
+# IDE and Editor Settings
 .vscode/
 .cursor/
 .cursor/rules/
+.idea/
+
+# Build Output
 dist/
+
+# Packaged artifacts and local tooling
+*.tgz
+git-filter-repo
+
+# Dependencies
 node_modules/
+
+# Lock Files (prefer pnpm-lock.yaml when present)
 package-lock.json
 pnpm-lock.yaml
-AppDataRoamingPythonPython311Scripts
+yarn.lock
+
+# Temporary Files
 .tmp
 tmp
+*.tmp
+
+# OS Generated Files
 .DS_Store
+Thumbs.db
+
+# Debug Logs
 npm-debug.log*
-yarn.lock
+yarn-debug.log*
+yarn-error.log*
+
+# Claude Code
+.claude/
+.claude_memory/
+*.claude-session
+
+# Miscellaneous
+AppDataRoamingPythonPython311Scripts
 deploy-node.bat
 .mdc
 docker-compose.yml
+
+# Environment Files (keep .env.example, ignore actual .env)
+.env.local
+.env.*.local

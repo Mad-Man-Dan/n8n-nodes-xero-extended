@@ -23,9 +23,13 @@ Xero Extended is an enhanced Xero integration that extends the standard Xero nod
 
 ## Installation
 
-Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation.
+Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation. In short:
 
-**Note:** This node is currently only available for self-hosted n8n instances. It will be available for n8n Cloud users in the future via pull requests to the base Xero node.
+1. In n8n, open **Settings → Community Nodes** and select **Install**.
+2. Enter the npm package name `n8n-nodes-xero-extended` and confirm.
+3. Once installed, set up the credentials for the node (see [Credentials](#credentials)).
+
+**Note:** This node is currently only available for self-hosted n8n instances. Support for n8n Cloud is planned via pull requests to the base Xero node; because of the volume of changes involved, batching them into a later update is more practical than many individual pull requests for the n8n team to review.
 
 ## Operations
 
@@ -52,17 +56,36 @@ This node uses Xero OAuth2 credentials that are separate from the standard Xero 
 
 ### Required Scopes
 
-**Base scopes:**
-- `offline_access`
-- `accounting.transactions`
-- `accounting.settings`
-- `accounting.contacts`
+Xero migrated its broad accounting scopes to granular, per-resource scopes ([details](https://developer.xero.com/documentation/guides/oauth2/scopes/)). This node requests the granular set:
 
-**Additional scopes:**
+**Connection**
+- `offline_access`
+
+**Accounting — transactions**
+- `accounting.invoices`
+- `accounting.payments`
+- `accounting.banktransactions` (also covers bank transfers)
+- `accounting.manualjournals`
+
+**Accounting — core**
+- `accounting.settings` (accounts, organisation, tax rates)
+- `accounting.contacts`
 - `accounting.attachments`
 - `accounting.budgets.read`
+
+**Accounting — reports (read-only)**
+- `accounting.reports.aged.read`
+- `accounting.reports.balancesheet.read`
+- `accounting.reports.banksummary.read`
+- `accounting.reports.budgetsummary.read`
+- `accounting.reports.executivesummary.read`
+- `accounting.reports.profitandloss.read`
+- `accounting.reports.trialbalance.read`
+- `accounting.reports.taxreports.read`
+- `accounting.reports.tenninetynine.read` (1099)
+
+**Files**
 - `files`
-- `accounting.reports.read`
 
 ### Setup
 
@@ -165,35 +188,11 @@ Track changes and manage notes:
 - **Create Note** - Add new notes
 - **Get History** - Retrieve transaction history
 
-## Installation
-
-### For n8n Cloud users
-
-This node is currently only available via installation on self-hosted instances. I will push to n8n-cloud via pull requests down the line to the base Xero node. However, so many changes and revisions have been done that the process would be time consuming for individual pull requests for the team to approve. I'll try to get to this some time in following month once I see about more additions.
-
-### For self-hosted n8n users
-
-To install a custom node in n8n, follow these steps:
-
-- Refer to the official documentation: n8n Custom Node Installation (https://docs.n8n.io/integrations/community-nodes/installation/)
-- Choose the custom node you want to install, on the install community nodes box you'll enter the npm package name for the node. For example, n8n-nodes-xero-extended
-- Once installed you will now need to setup the credentials for the node. See below for more info.
-
-
 ## Setup after installation
 
 Similar to base Xero node:
 1. Once installed you will set up the credentials in the same way done for the Xero base node. (you can't use the base Xero node as additional scopes are requested and needed for this node)
 2. Select the resource/organisations you want to work with or accept all
-
-
-## Credentials
-
-This node uses a separate set of Xero OAuth2 credentials from the standard Xero node. The credentials created will also request additional scopes not in the original Xero base node. The scopes requested are as follows:
-
-Previously the only scopes requested were: 	'offline_access', 'accounting.transactions', 'accounting.settings',	'accounting.contacts'
-
-Now the following are requested in addition: 	'accounting.attachments',	'accounting.budgets.read',	'files',	'accounting.reports.read',
 
 ## License
 
