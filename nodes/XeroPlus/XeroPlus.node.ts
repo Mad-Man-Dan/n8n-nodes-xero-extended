@@ -25,6 +25,7 @@ import { banktransactionsFields, banktransactionsOperations } from './BankTransa
 import { banktransferFields, banktransferOperations } from './BankTransfersDescription';
 import { historyandnotesFields, historyandnotesOperations } from './HistoryandNotesDescription';
 import { manualjournalsFields, manualjournalsOperations } from './ManualJournalsDescription';
+import { journalsFields, journalsOperations } from './JournalsDescription';
 
 
 
@@ -85,6 +86,10 @@ export class Xeroplus implements INodeType {
 						value: 'invoice',
 					},
 					{
+						name: 'Journal',
+						value: 'journals',
+					},
+					{
 						name: 'Manual Journal',
 						value: 'manualjournals',
 					},
@@ -129,6 +134,9 @@ export class Xeroplus implements INodeType {
 			// MANUAL JOURNALS
 			...manualjournalsOperations,
 			...manualjournalsFields,
+			// JOURNALS (system-generated general ledger)
+			...journalsOperations,
+			...journalsFields,
 		],
 	};
 
@@ -2238,6 +2246,60 @@ export class Xeroplus implements INodeType {
 							headers,
 						);
 						responseData = responseData.ManualJournals;
+					}
+				}
+				// JOURNALS (system-generated general ledger entries — read-only)
+				if (resource === 'journals') {
+					// Get
+					if (operation === 'get') {
+						const organizationId = this.getNodeParameter('organizationId', i) as string;
+						// Xero accepts either the JournalID (GUID) or the JournalNumber (integer) in the path
+						const journalId = (this.getNodeParameter('journalId', i) as string).trim();
+						responseData = await xeroApiRequest.call(this, 'GET', `/Journals/${journalId}`, { organizationId });
+						responseData = responseData.Journals;
+					}
+					// Get All
+					if (operation === 'getAll') {
+						const organizationId = this.getNodeParameter('organizationId', i) as string;
+						const returnAll = this.getNodeParameter('returnAll', i) as boolean;
+						const options = this.getNodeParameter('options', i) as IDataObject;
+						const headers: IDataObject = {};
+
+						// Handle If-Modified-Since header
+						if (options['If-Modified-Since']) {
+							headers['If-Modified-Since'] = options['If-Modified-Since'] as string;
+						}
+
+						// The Journals endpoint paginates by offset (highest JournalNumber seen), not by
+						// page, so xeroApiRequestAllItems cannot be used here. Use a local query object —
+						// the shared qs is declared outside the item loop and must not accumulate offset.
+						const journalsQs: IDataObject = {};
+						if (options.paymentsOnly) {
+							journalsQs.paymentsOnly = options.paymentsOnly as boolean;
+						}
+
+						let offset = (options.offset as number) ?? 0; // resume point; 0 = from the beginning
+						const limit = returnAll ? Infinity : (this.getNodeParameter('limit', i) as number);
+						const journals: IDataObject[] = [];
+						let batch: IDataObject[];
+						do {
+							const response = await xeroApiRequest.call(
+								this,
+								'GET',
+								'/Journals',
+								{ organizationId },
+								{ ...journalsQs, offset },
+								undefined,
+								headers,
+							);
+							batch = (response.Journals as IDataObject[]) ?? [];
+							journals.push(...batch);
+							if (batch.length > 0) {
+								offset = Math.max(...batch.map((journal) => journal.JournalNumber as number));
+							}
+							// Xero returns up to 100 journals per request; a full batch means more may exist
+						} while (batch.length === 100 && journals.length < limit);
+						responseData = returnAll ? journals : journals.slice(0, limit);
 					}
 				}
 

@@ -46,6 +46,7 @@ This node provides enhanced functionality for Xero integration, including additi
 - **Bank Transactions**: Create, Get, Get Many
 - **Bank Transfers**: Create, Get, Get Many
 - **Manual Journals**: Create, Get, Get Many
+- **Journals**: Get, Get Many (system-generated general ledger entries, read-only)
 - **History and Notes**: Create Note, Get History
 
 Users can also benefit from the increased scopes to perform custom API calls with expanded actions.
@@ -83,6 +84,9 @@ Xero migrated its broad accounting scopes to granular, per-resource scopes ([det
 - `accounting.reports.trialbalance.read`
 - `accounting.reports.taxreports.read`
 - `accounting.reports.tenninetynine.read` (1099)
+
+**Accounting — general ledger (read-only)**
+- `accounting.journals.read`
 
 **Files**
 - `files`
@@ -181,6 +185,18 @@ Manage manual journal entries:
 - **Create Manual Journal** - Create new manual journal entries
 - **Get Manual Journal** - Retrieve specific manual journal details
 - **Get Many Manual Journals** - Retrieve multiple manual journals with filtering
+
+### 📒 Journals
+Read-only access to Xero's general ledger — the system-generated journal entries created automatically from invoices, bills, payments, manual journals, and other transactions:
+
+- **Get Journal** - Retrieve a single journal by JournalID (GUID) or JournalNumber (integer)
+- **Get Many Journals** - Retrieve journals with automatic offset-based pagination
+
+**Options:**
+- ✅ **Return All** - Automatically pages through the full ledger (Xero returns 100 journals per request)
+- ✅ **Offset** - Resume retrieval after a specific journal number
+- ✅ **Payments Only** - Cash-basis journals only (accrual basis by default)
+- ✅ **If-Modified-Since** - Only journals created or modified since a given timestamp
 
 ### 📝 History and Notes
 Track changes and manage notes:

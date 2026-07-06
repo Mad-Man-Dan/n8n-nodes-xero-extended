@@ -38,6 +38,9 @@ const scopes = [
 	'accounting.reports.taxreports.read',
 	'accounting.reports.tenninetynine.read', // 1099
 
+	// Accounting — general ledger (system-generated journals; standalone read-only scope)
+	'accounting.journals.read',
+
 	// Files
 	'files',
 ];
