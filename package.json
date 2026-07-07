@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-xero-extended",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "Xero node for n8n with additional features beyond the standard Xero node",
   "keywords": [
     "n8n-community-node-package"

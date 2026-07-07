@@ -42,7 +42,7 @@ This node provides enhanced functionality for Xero integration, including additi
 - **Organisations**: Get Connected Organisations, Get Organisation Details
 - **Attachments**: Upload, Get, Get Many
 - **Accounts**: Create, Get, Get Many, Update, Delete
-- **Reports**: Get 1099 Report, Get Balance Sheet Report, Get Budget Summary Report, Get Profit and Loss Report
+- **Reports**: Get 1099 Report, Get Balance Sheet Report, Get Budget Summary Report, Get Profit and Loss Report, Get Trial Balance Report
 - **Bank Transactions**: Create, Get, Get Many
 - **Bank Transfers**: Create, Get, Get Many
 - **Manual Journals**: Create, Get, Get Many
@@ -95,6 +95,11 @@ Xero migrated its broad accounting scopes to granular, per-resource scopes ([det
 
 1. Create a new Xero OAuth2 credential (cannot use the base Xero node credentials)
 2. Select the resource/organizations you want to work with or accept all
+
+> **Upgrading?** If your credentials were created under an earlier version of this node (broad
+> scopes, or before the Journals resource was added), reconnect them after upgrading — OAuth2
+> refresh tokens only carry the scopes granted at the time of consent. Also ensure your Xero
+> developer app allows the requested scopes.
 
 ## Compatibility
 
@@ -161,9 +166,10 @@ Comprehensive reporting capabilities:
 - **Get Balance Sheet Report** - Access balance sheet data
 - **Get Budget Summary Report** - Retrieve budget information
 - **Get Profit and Loss Report** - Access P&L statements
+- **Get Trial Balance Report** - Retrieve trial balance data
 
 **Quality of Life Improvements:**
-- ✅ **User-Friendly Formatting** - Compact, readable format for Balance Sheet, Budget Summary, Profit and Loss, and Trial Balance reports
+- ✅ **Format Report in Simple Format** - Optional toggle (off by default) that transforms Xero's nested report structure into flat, readable line items with parsed amounts. Available on Balance Sheet, Budget Summary, Profit and Loss, and Trial Balance reports; original formatted values are preserved alongside in `*Formatted` fields.
 
 ### 🏦 Bank Transactions
 Complete bank transaction management:
