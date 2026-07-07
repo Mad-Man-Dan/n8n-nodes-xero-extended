@@ -70,7 +70,7 @@ export class XeroPlusOAuth2Api implements ICredentialType {
 			type: 'boolean',
 			default: false,
 			description:
-				'Whether to also request the <code>accounting.journals.read</code> scope used by the Journal endpoint (general ledger). Leave this off unless your Xero app has been assigned that scope — Xero does not assign it to newly registered apps, and requesting an unassigned scope causes the whole connection to fail.',
+				'Whether to also request the <code>accounting.journals.read</code> scope used by the Journal endpoint (general ledger). Your Xero app must have this endpoint/scope enabled for it to work — if it does not, Xero returns an unauthorized error when connecting. Xero does not assign this scope to newly registered apps, so leave this off unless you have confirmed your app has it.',
 		},
 		{
 			displayName: 'Grant Type',
