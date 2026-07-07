@@ -12,6 +12,12 @@ import type { Icon, ICredentialType, INodeProperties } from 'n8n-workflow';
 // Broad scopes (accounting.transactions, accounting.reports.read) are deprecated and
 // only usable by connections created before 29 April 2026 (removed by Sep 2027).
 // See: https://developer.xero.com/documentation/guides/oauth2/scopes/
+//
+// Every scope below is part of the set Xero assigns to newly registered apps, so the
+// default request succeeds for any app. `accounting.journals.read` (general ledger) is
+// deliberately NOT in this list — Xero does not assign it to new apps, and requesting a
+// scope the app lacks fails the whole authorization. It is added via the credential's
+// "Include General Ledger (Journals) Scope" toggle for apps that have it.
 const scopes = [
 	'offline_access',
 
@@ -38,12 +44,12 @@ const scopes = [
 	'accounting.reports.taxreports.read',
 	'accounting.reports.tenninetynine.read', // 1099
 
-	// Accounting — general ledger (system-generated journals; standalone read-only scope)
-	'accounting.journals.read',
-
 	// Files
 	'files',
 ];
+
+const baseScopes = scopes.join(' ');
+const journalsScope = 'accounting.journals.read'; // general ledger — see toggle note above
 
 export class XeroPlusOAuth2Api implements ICredentialType {
 	name = 'xeroplusOAuth2Api';
@@ -58,6 +64,14 @@ export class XeroPlusOAuth2Api implements ICredentialType {
 	documentationUrl = 'xero';
 
 	properties: INodeProperties[] = [
+		{
+			displayName: 'Include General Ledger (Journals) Scope',
+			name: 'includeJournalsScope',
+			type: 'boolean',
+			default: false,
+			description:
+				'Whether to also request the <code>accounting.journals.read</code> scope, required by the Journal resource. Only enable this if your Xero app has been assigned that scope — Xero does not assign it to newly registered apps, and requesting a scope your app lacks makes the whole connection fail.',
+		},
 		{
 			displayName: 'Grant Type',
 			name: 'grantType',
@@ -80,7 +94,7 @@ export class XeroPlusOAuth2Api implements ICredentialType {
 			displayName: 'Scope',
 			name: 'scope',
 			type: 'hidden',
-			default: scopes.join(' '),
+			default: `={{ $self["includeJournalsScope"] ? "${baseScopes} ${journalsScope}" : "${baseScopes}" }}`,
 		},
 		{
 			displayName: 'Auth URI Query Parameters',
