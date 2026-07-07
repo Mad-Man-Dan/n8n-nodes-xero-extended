@@ -97,7 +97,11 @@ Xero migrated its broad accounting scopes to granular, per-resource scopes ([det
 ### Setup
 
 1. Create a new Xero OAuth2 credential (cannot use the base Xero node credentials)
-2. Select the resource/organizations you want to work with or accept all
+2. Check the **Include Journal Endpoint Scope** setting — leave it **off** (the default) unless
+   your Xero app has the `accounting.journals.read` scope enabled and you plan to use the
+   Journals resource. Enabling it without the scope on your app makes Xero return an
+   unauthorized error when connecting.
+3. Connect, then select the resource/organizations you want to work with or accept all
 
 > **Upgrading?** If your credentials were created under an earlier version of this node (broad
 > scopes, or before the Journals resource was added), reconnect them after upgrading — OAuth2
@@ -226,7 +230,9 @@ Track changes and manage notes:
 
 Similar to base Xero node:
 1. Once installed you will set up the credentials in the same way done for the Xero base node. (you can't use the base Xero node as additional scopes are requested and needed for this node)
-2. Select the resource/organisations you want to work with or accept all
+2. Review the **Include Journal Endpoint Scope** setting in the credential (off by default —
+   only enable it if your Xero app has the `accounting.journals.read` scope; see [Credentials](#credentials))
+3. Select the resource/organisations you want to work with or accept all
 
 ## License
 
