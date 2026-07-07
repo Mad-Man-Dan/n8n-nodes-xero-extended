@@ -37,6 +37,7 @@ yarn-error.log*
 .claude/
 .claude_memory/
 *.claude-session
+CLAUDE.md
 
 # Miscellaneous
 AppDataRoamingPythonPython311Scripts
