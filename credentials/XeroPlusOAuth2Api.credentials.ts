@@ -17,7 +17,7 @@ import type { Icon, ICredentialType, INodeProperties } from 'n8n-workflow';
 // default request succeeds for any app. `accounting.journals.read` (general ledger) is
 // deliberately NOT in this list — Xero does not assign it to new apps, and requesting a
 // scope the app lacks fails the whole authorization. It is added via the credential's
-// "Include General Ledger (Journals) Scope" toggle for apps that have it.
+// "Include Journal Endpoint Scope" toggle for apps that have it.
 const scopes = [
 	'offline_access',
 
@@ -65,12 +65,12 @@ export class XeroPlusOAuth2Api implements ICredentialType {
 
 	properties: INodeProperties[] = [
 		{
-			displayName: 'Include General Ledger (Journals) Scope',
+			displayName: 'Include Journal Endpoint Scope',
 			name: 'includeJournalsScope',
 			type: 'boolean',
 			default: false,
 			description:
-				'Whether to also request the <code>accounting.journals.read</code> scope, required by the Journal resource. Only enable this if your Xero app has been assigned that scope — Xero does not assign it to newly registered apps, and requesting a scope your app lacks makes the whole connection fail.',
+				'Whether to also request the <code>accounting.journals.read</code> scope used by the Journal endpoint (general ledger). Leave this off unless your Xero app has been assigned that scope — Xero does not assign it to newly registered apps, and requesting an unassigned scope causes the whole connection to fail.',
 		},
 		{
 			displayName: 'Grant Type',

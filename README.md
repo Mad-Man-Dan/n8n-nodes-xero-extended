@@ -92,7 +92,7 @@ Xero migrated its broad accounting scopes to granular, per-resource scopes ([det
 - `accounting.journals.read` — required by the **Journals** resource, but Xero does not assign
   this scope to newly registered apps, so it is **not requested by default** (requesting a scope
   your app lacks fails the whole connection). If your Xero app has the scope, enable
-  **Include General Ledger (Journals) Scope** in the credential before connecting.
+  **Include Journal Endpoint Scope** in the credential before connecting.
 
 ### Setup
 
@@ -104,7 +104,7 @@ Xero migrated its broad accounting scopes to granular, per-resource scopes ([det
 > refresh tokens only carry the scopes granted at the time of consent. Also ensure your Xero
 > developer app allows the requested scopes.
 >
-> **Using the Journals resource?** Enable **Include General Ledger (Journals) Scope** in the
+> **Using the Journals resource?** Enable **Include Journal Endpoint Scope** in the
 > credential and reconnect. This is off by default because Xero does not assign
 > `accounting.journals.read` to newly registered apps, and requesting an unassigned scope fails
 > the connection.
@@ -206,8 +206,8 @@ Read-only access to Xero's general ledger — the system-generated journal entri
 - **Get Journal** - Retrieve a single journal by JournalID (GUID) or JournalNumber (integer)
 - **Get Many Journals** - Retrieve journals with automatic offset-based pagination
 
-> **Requires** the optional `accounting.journals.read` scope — enable **Include General Ledger
-> (Journals) Scope** in the credential (see [Credentials](#credentials)). Your Xero app must have
+> **Requires** the optional `accounting.journals.read` scope — enable **Include Journal
+> Endpoint Scope** in the credential (see [Credentials](#credentials)). Your Xero app must have
 > been assigned this scope; Xero does not grant it to newly registered apps.
 
 **Options:**
